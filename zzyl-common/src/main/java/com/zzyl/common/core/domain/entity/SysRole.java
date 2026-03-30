@@ -1,4 +1,7 @@
 package com.zzyl.common.core.domain.entity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +18,9 @@ import com.zzyl.common.core.domain.BaseEntity;
  * 
  * @author ruoyi
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysRole extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -63,23 +69,7 @@ public class SysRole extends BaseEntity
 
     /** 角色菜单权限 */
     private Set<String> permissions;
-
-    public SysRole()
-    {
-
-    }
-
-    public SysRole(Long roleId)
-    {
-        this.roleId = roleId;
-    }
-
-    public Long getRoleId()
-    {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId)
+public SysRole(Long roleId)
     {
         this.roleId = roleId;
     }
@@ -101,11 +91,6 @@ public class SysRole extends BaseEntity
         return roleName;
     }
 
-    public void setRoleName(String roleName)
-    {
-        this.roleName = roleName;
-    }
-
     @NotBlank(message = "权限字符不能为空")
     @Size(min = 0, max = 100, message = "权限字符长度不能超过100个字符")
     public String getRoleKey()
@@ -113,110 +98,10 @@ public class SysRole extends BaseEntity
         return roleKey;
     }
 
-    public void setRoleKey(String roleKey)
-    {
-        this.roleKey = roleKey;
-    }
-
     @NotNull(message = "显示顺序不能为空")
     public Integer getRoleSort()
     {
         return roleSort;
-    }
-
-    public void setRoleSort(Integer roleSort)
-    {
-        this.roleSort = roleSort;
-    }
-
-    public String getDataScope()
-    {
-        return dataScope;
-    }
-
-    public void setDataScope(String dataScope)
-    {
-        this.dataScope = dataScope;
-    }
-
-    public boolean isMenuCheckStrictly()
-    {
-        return menuCheckStrictly;
-    }
-
-    public void setMenuCheckStrictly(boolean menuCheckStrictly)
-    {
-        this.menuCheckStrictly = menuCheckStrictly;
-    }
-
-    public boolean isDeptCheckStrictly()
-    {
-        return deptCheckStrictly;
-    }
-
-    public void setDeptCheckStrictly(boolean deptCheckStrictly)
-    {
-        this.deptCheckStrictly = deptCheckStrictly;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getDelFlag()
-    {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag)
-    {
-        this.delFlag = delFlag;
-    }
-
-    public boolean isFlag()
-    {
-        return flag;
-    }
-
-    public void setFlag(boolean flag)
-    {
-        this.flag = flag;
-    }
-
-    public Long[] getMenuIds()
-    {
-        return menuIds;
-    }
-
-    public void setMenuIds(Long[] menuIds)
-    {
-        this.menuIds = menuIds;
-    }
-
-    public Long[] getDeptIds()
-    {
-        return deptIds;
-    }
-
-    public void setDeptIds(Long[] deptIds)
-    {
-        this.deptIds = deptIds;
-    }
-
-    public Set<String> getPermissions()
-    {
-        return permissions;
-    }
-
-    public void setPermissions(Set<String> permissions)
-    {
-        this.permissions = permissions;
     }
 
     @Override

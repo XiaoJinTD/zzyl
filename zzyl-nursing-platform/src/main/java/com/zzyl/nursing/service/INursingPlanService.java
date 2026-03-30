@@ -1,15 +1,16 @@
 package com.zzyl.nursing.service;
 
 import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzyl.nursing.domain.NursingPlan;
 
 /**
  * 护理计划Service接口
  * 
  * @author ruoyi
- * @date 2026-03-25
+ * @date 2026-03-30
  */
-public interface INursingPlanService 
+public interface INursingPlanService extends IService<NursingPlan>
 {
     /**
      * 查询护理计划

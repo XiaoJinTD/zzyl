@@ -1,4 +1,7 @@
 package com.zzyl.common.core.domain.entity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +18,9 @@ import com.zzyl.common.core.domain.BaseEntity;
  * 
  * @author ruoyi
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysDept extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -55,46 +61,11 @@ public class SysDept extends BaseEntity
     /** 子部门 */
     private List<SysDept> children = new ArrayList<SysDept>();
 
-    public Long getDeptId()
-    {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId)
-    {
-        this.deptId = deptId;
-    }
-
-    public Long getParentId()
-    {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId)
-    {
-        this.parentId = parentId;
-    }
-
-    public String getAncestors()
-    {
-        return ancestors;
-    }
-
-    public void setAncestors(String ancestors)
-    {
-        this.ancestors = ancestors;
-    }
-
     @NotBlank(message = "部门名称不能为空")
     @Size(min = 0, max = 30, message = "部门名称长度不能超过30个字符")
     public String getDeptName()
     {
         return deptName;
-    }
-
-    public void setDeptName(String deptName)
-    {
-        this.deptName = deptName;
     }
 
     @NotNull(message = "显示顺序不能为空")
@@ -103,30 +74,10 @@ public class SysDept extends BaseEntity
         return orderNum;
     }
 
-    public void setOrderNum(Integer orderNum)
-    {
-        this.orderNum = orderNum;
-    }
-
-    public String getLeader()
-    {
-        return leader;
-    }
-
-    public void setLeader(String leader)
-    {
-        this.leader = leader;
-    }
-
     @Size(min = 0, max = 11, message = "联系电话长度不能超过11个字符")
     public String getPhone()
     {
         return phone;
-    }
-
-    public void setPhone(String phone)
-    {
-        this.phone = phone;
     }
 
     @Email(message = "邮箱格式不正确")
@@ -134,51 +85,6 @@ public class SysDept extends BaseEntity
     public String getEmail()
     {
         return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-
-    public String getDelFlag()
-    {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag)
-    {
-        this.delFlag = delFlag;
-    }
-
-    public String getParentName()
-    {
-        return parentName;
-    }
-
-    public void setParentName(String parentName)
-    {
-        this.parentName = parentName;
-    }
-
-    public List<SysDept> getChildren()
-    {
-        return children;
-    }
-
-    public void setChildren(List<SysDept> children)
-    {
-        this.children = children;
     }
 
     @Override

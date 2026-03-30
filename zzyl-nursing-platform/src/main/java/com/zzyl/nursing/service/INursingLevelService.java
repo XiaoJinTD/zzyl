@@ -1,15 +1,16 @@
 package com.zzyl.nursing.service;
 
 import java.util.List;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.zzyl.nursing.domain.NursingLevel;
 
 /**
  * 护理等级Service接口
  * 
  * @author ruoyi
- * @date 2026-03-25
+ * @date 2026-03-30
  */
-public interface INursingLevelService 
+public interface INursingLevelService extends IService<NursingLevel>
 {
     /**
      * 查询护理等级

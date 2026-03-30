@@ -1,4 +1,7 @@
 package com.zzyl.system.domain;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -8,6 +11,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * 
  * @author ruoyi
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysRoleDept
 {
     /** 角色ID */
@@ -15,26 +21,6 @@ public class SysRoleDept
     
     /** 部门ID */
     private Long deptId;
-
-    public Long getRoleId()
-    {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId)
-    {
-        this.roleId = roleId;
-    }
-
-    public Long getDeptId()
-    {
-        return deptId;
-    }
-
-    public void setDeptId(Long deptId)
-    {
-        this.deptId = deptId;
-    }
 
     @Override
     public String toString() {

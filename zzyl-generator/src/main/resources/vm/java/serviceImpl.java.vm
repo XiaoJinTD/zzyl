@@ -1,5 +1,6 @@
 package ${packageName}.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 #foreach ($column in $columns)
 #if($column.javaField == 'createTime' || $column.javaField == 'updateTime')
@@ -7,7 +8,7 @@ import com.zzyl.common.utils.DateUtils;
 #break
 #end
 #end
-import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 #if($table.sub)
 import java.util.ArrayList;
@@ -26,11 +27,8 @@ import ${packageName}.service.I${ClassName}Service;
  * @date ${datetime}
  */
 @Service
-public class ${ClassName}ServiceImpl implements I${ClassName}Service 
+public class ${ClassName}ServiceImpl extends ServiceImpl<${ClassName}Mapper, ${ClassName}> implements I${ClassName}Service
 {
-    @Autowired
-    private ${ClassName}Mapper ${className}Mapper;
-
     /**
      * 查询${functionName}
      * 
@@ -40,7 +38,11 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Override
     public ${ClassName} select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField})
     {
-        return ${className}Mapper.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
+#if($table.sub)
+        return baseMapper.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
+#else
+        return getById(${pkColumn.javaField});
+#end
     }
 
     /**
@@ -52,7 +54,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Override
     public List<${ClassName}> select${ClassName}List(${ClassName} ${className})
     {
-        return ${className}Mapper.select${ClassName}List(${className});
+        return baseMapper.select${ClassName}List(${className});
     }
 
     /**
@@ -67,17 +69,21 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Override
     public int insert${ClassName}(${ClassName} ${className})
     {
-#foreach ($column in $columns)
-#if($column.javaField == 'createTime')
-        ${className}.setCreateTime(DateUtils.getNowDate());
-#end
-#end
+###foreach ($column in $columns)
+###if($column.javaField == 'createTime')
+##        ${className}.setCreateTime(DateUtils.getNowDate());
+###end
+###end
 #if($table.sub)
-        int rows = ${className}Mapper.insert${ClassName}(${className});
-        insert${subClassName}(${className});
-        return rows;
+        boolean saved = save(${className});
+        if (saved)
+        {
+            insert${subClassName}(${className});
+            return 1;
+        }
+        return 0;
 #else
-        return ${className}Mapper.insert${ClassName}(${className});
+        return save(${className}) ? 1 : 0;
 #end
     }
 
@@ -93,16 +99,23 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     @Override
     public int update${ClassName}(${ClassName} ${className})
     {
-#foreach ($column in $columns)
-#if($column.javaField == 'updateTime')
-        ${className}.setUpdateTime(DateUtils.getNowDate());
-#end
-#end
+###foreach ($column in $columns)
+###if($column.javaField == 'updateTime')
+##        ${className}.setUpdateTime(DateUtils.getNowDate());
+###end
+###end
 #if($table.sub)
-        ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
+        boolean updated = updateById(${className});
+        if (!updated)
+        {
+            return 0;
+        }
+        baseMapper.delete${subClassName}By${subTableFkClassName}(${className}.get${pkColumn.capJavaField}());
         insert${subClassName}(${className});
+        return 1;
+#else
+        return updateById(${className}) ? 1 : 0;
 #end
-        return ${className}Mapper.update${ClassName}(${className});
     }
 
     /**
@@ -118,9 +131,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     public int delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaType}[] ${pkColumn.javaField}s)
     {
 #if($table.sub)
-        ${className}Mapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
+        baseMapper.delete${subClassName}By${subTableFkClassName}s(${pkColumn.javaField}s);
 #end
-        return ${className}Mapper.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s);
+        return removeByIds(Arrays.asList(${pkColumn.javaField}s)) ? ${pkColumn.javaField}s.length : 0;
     }
 
     /**
@@ -136,9 +149,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
     public int delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaType} ${pkColumn.javaField})
     {
 #if($table.sub)
-        ${className}Mapper.delete${subClassName}By${subTableFkClassName}(${pkColumn.javaField});
+        baseMapper.delete${subClassName}By${subTableFkClassName}(${pkColumn.javaField});
 #end
-        return ${className}Mapper.delete${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField});
+        return removeById(${pkColumn.javaField}) ? 1 : 0;
     }
 #if($table.sub)
 
@@ -161,7 +174,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service
             }
             if (list.size() > 0)
             {
-                ${className}Mapper.batch${subClassName}(list);
+                baseMapper.batch${subClassName}(list);
             }
         }
     }

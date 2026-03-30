@@ -1,4 +1,7 @@
 package com.zzyl.system.domain;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -8,6 +11,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * 
  * @author ruoyi
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class SysUserPost
 {
     /** 用户ID */
@@ -15,26 +21,6 @@ public class SysUserPost
     
     /** 岗位ID */
     private Long postId;
-
-    public Long getUserId()
-    {
-        return userId;
-    }
-
-    public void setUserId(Long userId)
-    {
-        this.userId = userId;
-    }
-
-    public Long getPostId()
-    {
-        return postId;
-    }
-
-    public void setPostId(Long postId)
-    {
-        this.postId = postId;
-    }
 
     @Override
     public String toString() {

@@ -1,4 +1,7 @@
 package com.zzyl.common.core.domain;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,6 +17,9 @@ import com.zzyl.common.utils.StringUtils;
  * 
  * @author ruoyi
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TreeSelect implements Serializable
 {
     private static final long serialVersionUID = 1L;
@@ -30,13 +36,7 @@ public class TreeSelect implements Serializable
     /** 子节点 */
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<TreeSelect> children;
-
-    public TreeSelect()
-    {
-
-    }
-
-    public TreeSelect(SysDept dept)
+public TreeSelect(SysDept dept)
     {
         this.id = dept.getDeptId();
         this.label = dept.getDeptName();
@@ -51,43 +51,4 @@ public class TreeSelect implements Serializable
         this.children = menu.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
     }
 
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public String getLabel()
-    {
-        return label;
-    }
-
-    public void setLabel(String label)
-    {
-        this.label = label;
-    }
-
-    public boolean isDisabled()
-    {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled)
-    {
-        this.disabled = disabled;
-    }
-
-    public List<TreeSelect> getChildren()
-    {
-        return children;
-    }
-
-    public void setChildren(List<TreeSelect> children)
-    {
-        this.children = children;
-    }
 }

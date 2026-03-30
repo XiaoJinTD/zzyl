@@ -1,4 +1,7 @@
 package com.zzyl.framework.web.domain.server;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import com.zzyl.common.utils.Arith;
 
@@ -7,6 +10,9 @@ import com.zzyl.common.utils.Arith;
  * 
  * @author ruoyi
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Mem
 {
     /**
@@ -29,29 +35,14 @@ public class Mem
         return Arith.div(total, (1024 * 1024 * 1024), 2);
     }
 
-    public void setTotal(long total)
-    {
-        this.total = total;
-    }
-
     public double getUsed()
     {
         return Arith.div(used, (1024 * 1024 * 1024), 2);
     }
 
-    public void setUsed(long used)
-    {
-        this.used = used;
-    }
-
     public double getFree()
     {
         return Arith.div(free, (1024 * 1024 * 1024), 2);
-    }
-
-    public void setFree(long free)
-    {
-        this.free = free;
     }
 
     public double getUsage()

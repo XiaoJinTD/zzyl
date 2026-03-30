@@ -1,8 +1,9 @@
 package com.zzyl.nursing.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import com.zzyl.common.utils.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import com.zzyl.nursing.mapper.NursingLevelMapper;
 import com.zzyl.nursing.domain.NursingLevel;
@@ -12,14 +13,11 @@ import com.zzyl.nursing.service.INursingLevelService;
  * 护理等级Service业务层处理
  * 
  * @author ruoyi
- * @date 2026-03-25
+ * @date 2026-03-30
  */
 @Service
-public class NursingLevelServiceImpl implements INursingLevelService 
+public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, NursingLevel> implements INursingLevelService
 {
-    @Autowired
-    private NursingLevelMapper nursingLevelMapper;
-
     /**
      * 查询护理等级
      * 
@@ -29,7 +27,7 @@ public class NursingLevelServiceImpl implements INursingLevelService
     @Override
     public NursingLevel selectNursingLevelById(Long id)
     {
-        return nursingLevelMapper.selectNursingLevelById(id);
+        return getById(id);
     }
 
     /**
@@ -41,7 +39,7 @@ public class NursingLevelServiceImpl implements INursingLevelService
     @Override
     public List<NursingLevel> selectNursingLevelList(NursingLevel nursingLevel)
     {
-        return nursingLevelMapper.selectNursingLevelList(nursingLevel);
+        return baseMapper.selectNursingLevelList(nursingLevel);
     }
 
     /**
@@ -53,8 +51,7 @@ public class NursingLevelServiceImpl implements INursingLevelService
     @Override
     public int insertNursingLevel(NursingLevel nursingLevel)
     {
-        nursingLevel.setCreateTime(DateUtils.getNowDate());
-        return nursingLevelMapper.insertNursingLevel(nursingLevel);
+        return save(nursingLevel) ? 1 : 0;
     }
 
     /**
@@ -66,8 +63,7 @@ public class NursingLevelServiceImpl implements INursingLevelService
     @Override
     public int updateNursingLevel(NursingLevel nursingLevel)
     {
-        nursingLevel.setUpdateTime(DateUtils.getNowDate());
-        return nursingLevelMapper.updateNursingLevel(nursingLevel);
+        return updateById(nursingLevel) ? 1 : 0;
     }
 
     /**
@@ -79,7 +75,7 @@ public class NursingLevelServiceImpl implements INursingLevelService
     @Override
     public int deleteNursingLevelByIds(Long[] ids)
     {
-        return nursingLevelMapper.deleteNursingLevelByIds(ids);
+        return removeByIds(Arrays.asList(ids)) ? ids.length : 0;
     }
 
     /**
@@ -91,6 +87,6 @@ public class NursingLevelServiceImpl implements INursingLevelService
     @Override
     public int deleteNursingLevelById(Long id)
     {
-        return nursingLevelMapper.deleteNursingLevelById(id);
+        return removeById(id) ? 1 : 0;
     }
 }
