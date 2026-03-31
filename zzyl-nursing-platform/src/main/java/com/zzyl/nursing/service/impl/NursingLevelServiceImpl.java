@@ -3,21 +3,26 @@ package com.zzyl.nursing.service.impl;
 import java.util.Arrays;
 import java.util.List;
 import com.zzyl.common.utils.DateUtils;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zzyl.nursing.vo.NursingLevelVo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.zzyl.nursing.mapper.NursingLevelMapper;
 import com.zzyl.nursing.domain.NursingLevel;
 import com.zzyl.nursing.service.INursingLevelService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 /**
  * 护理等级Service业务层处理
  * 
- * @author ruoyi
- * @date 2026-03-30
+ * @author alexis
+ * @date 2025-06-02
  */
 @Service
 public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, NursingLevel> implements INursingLevelService
 {
+    @Autowired
+    private NursingLevelMapper nursingLevelMapper;
+
     /**
      * 查询护理等级
      * 
@@ -39,7 +44,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
     @Override
     public List<NursingLevel> selectNursingLevelList(NursingLevel nursingLevel)
     {
-        return baseMapper.selectNursingLevelList(nursingLevel);
+        return nursingLevelMapper.selectNursingLevelList(nursingLevel);
     }
 
     /**
@@ -75,7 +80,7 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
     @Override
     public int deleteNursingLevelByIds(Long[] ids)
     {
-        return removeByIds(Arrays.asList(ids)) ? ids.length : 0;
+        return removeByIds(Arrays.asList(ids)) ? 1 : 0;
     }
 
     /**
@@ -88,5 +93,16 @@ public class NursingLevelServiceImpl extends ServiceImpl<NursingLevelMapper, Nur
     public int deleteNursingLevelById(Long id)
     {
         return removeById(id) ? 1 : 0;
+    }
+
+    /**
+     * 查询护理等级Vo列表
+     *
+     * @param nursingLevel 条件
+     * @return 结果
+     */
+    @Override
+    public List<NursingLevelVo> selectNursingLevelVoList(NursingLevel nursingLevel) {
+        return nursingLevelMapper.selectNursingLevelVoList(nursingLevel);
     }
 }
